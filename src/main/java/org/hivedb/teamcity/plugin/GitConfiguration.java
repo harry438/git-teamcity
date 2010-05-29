@@ -76,6 +76,8 @@ public class GitConfiguration {
       "C:\\Program Files\\Git\\Cmd\\git.cmd",
       "C:\\Program Files (x86)\\Cmd\\git-debug.cmd",
       "C:\\Program Files (x86)\\Cmd\\git.cmd",
+      "C:\\Program Files (x86)\\git\\bin\\git.exe",
+      "C:\\Program Files\\git\\bin\\git.exe",
       "/usr/bin/git",
     };
     for (String path: defaults) {
