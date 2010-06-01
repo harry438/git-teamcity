@@ -82,8 +82,8 @@ private static final String[] defaultGitPaths = new String[] {
   }
 
   private static File inferGitCommand(VcsRoot root) {
-	  String pathToGitExecutable = root.GetProperty(PATH_TO_GIT_EXECUTABLE);  
-	  File file = new File(pathToGitExecutable)
+	  String pathToGitExecutable = root.getProperty(PATH_TO_GIT_EXECUTABLE);  
+	  File file = new File(pathToGitExecutable);
 	  if(file.exists()){
 		  return file;
 	  }
