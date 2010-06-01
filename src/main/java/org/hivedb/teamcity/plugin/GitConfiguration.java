@@ -8,12 +8,22 @@ public class GitConfiguration {
   public static final String CLONE_URL = "clone_url";
   public static final String BRANCH = "branch";
   public static final String SERVER_PROJECT_DIRECTORY = "server_project_directory";
+  public static final String PATH_TO_GIT_EXECUTABLE = "path_to_git_executable";
   
   File workingDirectory;
   File projectDirectory;
   File command;
   String url;
   String branch;
+private static final String[] defaultGitPaths = new String[] {
+  "C:\\Program Files\\Git\\Cmd\\git-debug.cmd",
+  "C:\\Program Files\\Git\\Cmd\\git.cmd",
+  "C:\\Program Files (x86)\\Cmd\\git-debug.cmd",
+  "C:\\Program Files (x86)\\Cmd\\git.cmd",
+  "C:\\Program Files (x86)\\git\\bin\\git.exe",
+  "C:\\Program Files\\git\\bin\\git.exe",
+  "/usr/bin/git",
+};
 
   public File getWorkingDirectory() {
     return workingDirectory;
@@ -56,32 +66,30 @@ public class GitConfiguration {
     File working = project.getParentFile();
     String url = root.getProperty(CLONE_URL);
     String branch = root.getProperty(BRANCH);
-    return new GitConfiguration(inferGitCommand(), working, project, url, branch);
+    return new GitConfiguration(inferGitCommand(root), working, project, url, branch);
   }
   
   public static GitConfiguration createServerConfiguration(VcsRoot root) {
     File project = new File(root.getProperty(SERVER_PROJECT_DIRECTORY));
+    
     File working = project.getParentFile();
     if (!working.exists()) {
       working.mkdirs();
     }
     String url = root.getProperty(CLONE_URL);
     String branch = root.getProperty(BRANCH);
-    return new GitConfiguration(inferGitCommand(), working, project, url, branch);
+    return new GitConfiguration(inferGitCommand(root), working, project, url, branch);
   }
 
-  private static File inferGitCommand() {
-    String[] defaults = new String[] {
-      "C:\\Program Files\\Git\\Cmd\\git-debug.cmd",
-      "C:\\Program Files\\Git\\Cmd\\git.cmd",
-      "C:\\Program Files (x86)\\Cmd\\git-debug.cmd",
-      "C:\\Program Files (x86)\\Cmd\\git.cmd",
-      "C:\\Program Files (x86)\\git\\bin\\git.exe",
-      "C:\\Program Files\\git\\bin\\git.exe",
-      "/usr/bin/git",
-    };
-    for (String path: defaults) {
-      File file = new File(path);
+  private static File inferGitCommand(VcsRoot root) {
+	  String pathToGitExecutable = root.GetProperty(PATH_TO_GIT_EXECUTABLE);  
+	  File file = new File(pathToGitExecutable)
+	  if(file.exists()){
+		  return file;
+	  }
+	  
+    for (String path: defaultGitPaths) {
+      file = new File(path);
       if (file.exists()) {
         return file;
       }

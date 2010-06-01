@@ -19,6 +19,11 @@
     <td><props:textProperty name="server_project_directory" className="longField" maxlength="256" />
       <span class="error" id="error_server_project_directory"></span></td>
   </tr>
+  <tr>
+    <th><label for="path_to_git_executable">Path to Git Executable: <l:star/></label></th>
+    <td><props:textProperty name="path_to_git_executable" className="longField" maxlength="256" />
+      <span class="error" id="error_path_to_git_executable"></span></td>
+  </tr>
   </l:settingsGroup>
 
 </table>
